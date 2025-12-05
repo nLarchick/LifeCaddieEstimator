@@ -80,7 +80,7 @@ def process_image(file_path: str) -> ItemFormat:
     )
 
     if response.output_parsed is None:
-        raise Exception("The API call failed!")
+        raise Exception("The response failed to parse!")
     else:
         return response.output_parsed
 
@@ -92,7 +92,7 @@ if __name__ == "__main__":
     saved to a file such that the API does not have
     to be re-run.
     """
-    output = process_image("tmp-livingroom-example.webp")
+    output = process_image("assets/tmp-livingroom-example.webp")
 
     with open("testfiledata.json", "w") as f:
         f.write(output.model_dump_json(indent=4))
