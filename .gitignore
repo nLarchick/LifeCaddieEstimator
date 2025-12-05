@@ -4,3 +4,4 @@ testfile*
 __pycache
 *.pyc
 *.pyo
+.vscode
