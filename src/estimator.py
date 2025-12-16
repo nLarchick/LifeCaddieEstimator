@@ -24,40 +24,63 @@ def create_file(file_path: str) -> str:
         return result.id
 
 
-def identify_items(file_path: str):
-    file_id = create_file(file_path)
+def build_file(md_path: str) -> str:
+    """Encode a markdown file to utf-8 for reading
+
+    :param md_path: Path to desired image.
+    :type md_path: str
+    :returns: The context markdown file path.
+    :rtype: str
+    """
+    try:
+        with open("src/context.md", "r", encoding="utf-8") as f:
+            context_content = f.read()
+        return context_content
+    except Exception as e:
+        print(f"Error reading file: {e}")
+        return ""
+
+
+def identify_items():
+    print("SERVICE: Begin context gathering...")
+
+    context_readable = build_file("src/context.md")
+    print("SERVICE: Cleaned markdown file!")
+
+    image = create_file("src/assets/girls-bedroom-example.jpg")
+    print("SERVICE: Uploaded image file!")
+
+    print("SERVICE: Begin LLM call...")
     response = client.responses.create(
         model="gpt-5",
         input=[
             {
-				"role": "developer",
-                "content": "tmp."  #TODO : Add proper context i.e. "use text doc + image ...s"
-			},
-            {
-				"role": "developer",
+                "role": "developer",
                 "content": [
-                    {"type": "input_text", "text": "This is a list of common items and how to deal with them."},
-					{"type": "input_file", "filename": "/path/to/the/cheatsheet"} #TODO : Add actual cheat sheet for LLM
-				]
-			},
+                    {"type": "input_text", "text": "Read the provided context file to understand your role."},
+                    {"type": "input_text", "text": context_readable},
+                ],
+            },
             {
                 "role": "user",
                 "content": [
-                    {"type": "input_text", "text": "This image is a picture of the space."},
-                    {"type": "input_image", "detail": "auto", "file_id": file_id},
-                ],
+                    {"type": "input_text", "text": "Here is the image of the space."},
+                    {"type": "input_image", "detail": "auto", "file_id": image}
+                ]
             }
         ],
     )
-    return response.output
-
-
-def main():
-    print("Hello, World!")
+    return response.output_text
 
 
 if __name__ == "__main__":
-    main()
+    print("SERVICE: Running identify_items...")
+    print("___________________________")
+    answer = identify_items()
+
+    print("SERVICE: Done!.!")
+    print("___________________________ Answer: \n")
+    print(answer)
 
 
 """ Steps Needed
