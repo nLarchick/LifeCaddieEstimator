@@ -16,15 +16,19 @@ Planned future capabilities:
 ```
 Estimator
 ├── src/                # Project files
-│   └── hello.py        
-├── tests/              # Future unit & integration tests
+│   └── assets/         # Supporting files i.e. images        
+│   └── context.md
+│   └── estimator.py    # Main driver file
+└── .gitignore          # Ignored files for github
 └── README.md           # Project documentation
+└── requirements.tx     # Library and project additions
 ```
 
 ## Requirements
 
 * Python 3.12.3 (recommended)
-* ~TBD
+* Check the __requirements.txt__ file for specific libraries
+* OpenAI API key
 
 ## Future Roadmap
 
@@ -41,3 +45,58 @@ Estimator
   * Front end for adding images, context, and displaying estimated results
 * **Model Fine-Tuning**
   * Improve accuracy with custom imagesets and before-afters
+
+## Getting Started
+
+If you want to get the project working locally.. do this:
+
+### 1. Clone the Repository
+
+First, clone the project repository to your local machine using Git:
+
+```bash
+git clone <REPOSITORY_URL>
+cd <REPOSITORY_NAME>
+```
+
+Replace `<REPOSITORY_URL>` with the actual URL of the repository.
+
+### 2. Install Python Dependencies
+
+Make sure you have Python installed (preferably Python 3.9+).
+
+All required Python libraries are listed in the `requirements.txt` file. Install them using:
+
+```bash
+pip install -r requirements.txt
+```
+
+It is recommended to use a virtual environment:
+
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+### 3. Create a `.env` File and Add Your API Key
+
+The project uses environment variables to manage sensitive information such as API keys.
+
+1. Create a `.env` file in the root directory of the project:
+
+```bash
+touch .env
+```
+
+2. Add your API key to the `.env` file:
+
+```env
+API_KEY=your_api_key_here
+```
+
+Make sure **not** to commit the `.env` file to version control. It should be included in `.gitignore`.
+
+---
+
+You are now ready to start working on the project! Run `estimator.py` to recieve an estimation on the provided image!
