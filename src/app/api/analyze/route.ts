@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 import crypto from "crypto";
-import { corsHeaders, handleOPTIONS, verifySession, safeJsonParse, SERVICES_LIST } from "../toolkit";
+import { corsHeaders, handleOPTIONS, verifySession, safeJsonParse } from "../toolkit";
+import { servicesForPrompt } from "../../../constants/services";
 import { uploadBlob } from "../../../lib/azureStorage";
 import { ALLOWED_GOAL_VALUES, ALLOWED_FEELING_VALUES, MAX_PHOTO_BYTES } from "../../../constants/intake";
 import { supabaseServer } from "../../../lib/supabase/server";
@@ -99,7 +100,7 @@ Chat History:
 ${chatHistory.map((msg: { who: string; text: string }) => `${msg.who}: ${msg.text}`).join('\n')}
 
 Available Life Caddie Services:
-${SERVICES_LIST}
+${servicesForPrompt()}
 
 Return STRICT JSON ONLY:
 {

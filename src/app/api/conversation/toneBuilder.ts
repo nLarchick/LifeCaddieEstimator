@@ -1,4 +1,4 @@
-import { SERVICES_LIST } from "../toolkit";
+import { servicesForPrompt } from "../../../constants/services";
 import type { ChatMessage } from "../../../lib/api";
 
 const PERSONA = "You are a calm, non-judgmental downsizing & organizing guide for 'Life Caddie'.";
@@ -35,7 +35,7 @@ ${PERSONA}
 Based on the chat history, ask ONE clarifying question to better understand the user's needs.
 
 Available Services:
-${SERVICES_LIST}
+${servicesForPrompt()}
 
 Chat History:
 ${formattedHistory}
@@ -65,7 +65,7 @@ ${PERSONA}
 The user has answered your clarifying question. Recommend 2-3 Life Caddie services that best match their situation.
 
 Available Services:
-${SERVICES_LIST}
+${servicesForPrompt()}
 
 Chat History:
 ${formattedHistory}
@@ -98,7 +98,7 @@ ${PERSONA}
 The user is continuing the conversation to refine their service options. Narrow down to the best 1-2 services.
 
 Available Services:
-${SERVICES_LIST}
+${servicesForPrompt()}
 
 Chat History:
 ${formattedHistory}
