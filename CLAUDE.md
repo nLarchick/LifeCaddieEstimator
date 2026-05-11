@@ -64,3 +64,15 @@ and small achievable first steps.
   calm, supportive, non-judgmental
 - Use async/await for all asynchronous operations (no callbacks or raw promises)
 - Use camelCase for all variable, function, and property naming conventions
+
+## Refactoring Rules
+When extracting state from a parent component into a child component, always audit
+any parent-level reset, clear, or initialise functions to check if they previously
+touched the moved state. If they did, fix the gap — either by adding a `key` prop
+to the child (so incrementing it on reset forces a remount and discards local state)
+or by making the state controlled (lifted back up and passed as props).
+
+Failing to do this produces a silent bug: the reset runs without error but the child
+retains its previous state. This is what broke the Reset button in IntakeForm —
+commit 8c872ea extracted goal/feeling/photo into IntakeForm local state but did not
+update handleReset() in SpaceClarityTool to compensate.

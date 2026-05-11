@@ -50,6 +50,7 @@ function resolveLastPlaceholder(messages: ChatMessage[], placeholder: string, re
 
 export default function SpaceClarityTool() {
   const [busy, setBusy] = useState(false);
+  const [resetKey, setResetKey] = useState(0);
   const [connectionStatus, setConnectionStatus] = useState<"Ready" | "Working…" | "Check connection">("Ready");
   const [submitted, setSubmitted] = useState(false);
 
@@ -224,6 +225,7 @@ export default function SpaceClarityTool() {
   }
 
   function handleReset() {
+    setResetKey((k) => k + 1);
     setPills([]);
     setChatInput("");
     setConnectionStatus("Ready");
@@ -278,6 +280,7 @@ export default function SpaceClarityTool() {
       <div className="grid">
         {!submitted ? (
           <IntakeForm
+            key={resetKey}
             busy={busy}
             onSubmit={handleSubmit}
             onPrivacyNote={handlePrivacyNote}
