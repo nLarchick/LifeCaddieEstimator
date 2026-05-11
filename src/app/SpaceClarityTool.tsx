@@ -6,6 +6,7 @@ import IntakeForm from "../components/IntakeForm";
 import ChatView from "../components/ChatView";
 import WelcomeScreen from "../components/WelcomeScreen";
 import HowItWorksPanel from "../components/HowItWorksPanel";
+import PrivacyNotePanel from "../components/PrivacyNotePanel";
 import { useAuthEmail } from "../hooks/useAuthEmail";
 import { useClientToken } from "../hooks/useClientToken";
 import { analyzeSpace, sendConversation } from "../lib/api";
@@ -65,6 +66,7 @@ export default function SpaceClarityTool() {
 
   const [showWelcome, setShowWelcome] = useState(true);
   const [showHowItWorks, setShowHowItWorks] = useState(false);
+  const [showPrivacyNote, setShowPrivacyNote] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showCalendlyEmbed, setShowCalendlyEmbed] = useState(false);
   const [schedulingComplete, setSchedulingComplete] = useState(false);
@@ -241,15 +243,6 @@ export default function SpaceClarityTool() {
     setMessages([{ who: "bot", text: WELCOME_MESSAGE }]);
   }
 
-  function handlePrivacyNote() {
-    setMessages((prev) =>
-      appendMessage(
-        prev,
-        "Privacy note:\n• Start anonymous.\n• Only upload what you're comfortable sharing.\n• Avoid including faces, mail, or personal documents.\n\n(When you publish this, add your exact retention policy—e.g., auto-delete images after 24 hours.)"
-      )
-    );
-  }
-
   function handleSendMessage() {
     const text = chatInput.trim();
     if (!text || busy) return;
@@ -277,13 +270,17 @@ export default function SpaceClarityTool() {
         <HowItWorksPanel onClose={() => setShowHowItWorks(false)} />
       )}
 
+      {showPrivacyNote && (
+        <PrivacyNotePanel onClose={() => setShowPrivacyNote(false)} />
+      )}
+
       <div className="grid">
         {!submitted ? (
           <IntakeForm
             key={resetKey}
             busy={busy}
             onSubmit={handleSubmit}
-            onPrivacyNote={handlePrivacyNote}
+            onPrivacyNote={() => setShowPrivacyNote(true)}
             onReset={handleReset}
             onHowItWorks={() => setShowHowItWorks(true)}
             userHeader={null}
